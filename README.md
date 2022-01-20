@@ -5,9 +5,7 @@
 
 <br />
 <div align="center">
-  <a href="https://github.com/othneildrew/Best-README-Template">
-    <img src="images/shopify-icon.svg" alt="Logo" width="80" height="80">
-  </a>
+  <img src="images/shopify-icon.svg" alt="Logo" width="80" height="80">
 
   <h3 align="center">Inventory Tracker Challenge</h3>
   <h4 align="center">Shopify Backend Developer Intern - Summer 2022</h3>
@@ -57,7 +55,7 @@ The following are the major frameworks/libraries used to bootstrap this project.
 Considering numerous dependencies to this project exist, I will be using an ideal IDE such as Visual Studio Code to set up this project under installation.
 
 ### Prerequisites
-To run a Spring Boot application in Visual Studio Code, you need to install the following:
+To run this Spring Boot application in Visual Studio Code, you need to install the following:
 * <a href="https://www.microsoft.com/openjdk">Java Development Kit (JDK)</a>
 * <a href="https://marketplace.visualstudio.com/items?itemName=vscjava.vscode-java-pack">Extension Pack for Java</a>
 * <a href="https://marketplace.visualstudio.com/items?itemName=pivotal.vscode-boot-dev-pack">Spring Boot Extension Pack</a>
@@ -104,15 +102,14 @@ Password:
 Password!
 ```
 
+<p align="right">(<a href="#top">back to top</a>)</p>
+
 ## License
 
 Distributed under the MIT License. See `LICENSE.txt` for more information.
 
 <p align="right">(<a href="#top">back to top</a>)</p>
 
-
-
-<!-- CONTACT -->
 ## Contact
 
 Marcin Koziel - [marcinzkoziel@gmail.com](marcinzkoziel@gmail.com)
