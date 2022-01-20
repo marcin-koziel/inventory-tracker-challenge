@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+<head th:replace="fragments/header :: html-head">
+    <meta charset="UTF-8">
+    <title>Add Book</title>
+</head>
+<body>
+
+<div class="div-form-container d-flex flex-column justify-content-center align-items-center h-100 w-100">
+
+    <h1 class="py-4">New Category</h1>
+
+    <form class="d-flex flex-column justify-content-center align-items-center w-75" action="#"
+          th:action="@{/admin/categories/submit}" th:object="${category}" method="post">
+
+        <div class="form-group py-5 w-75">
+            <label class="my-1">Title</label>
+            <input hidden type="text" th:field="*{id}">
+            <input class="form-control" type="text" th:field="*{title}" required>
+        </div>
+
+        <div class="d-flex flex-row justify-content-center my-2" sec:authorize="hasRole('ADMIN')">
+            <input th:if="${category.id == null}" class="btn btn-primary mx-2" type="submit" value="Add Category">
+            <input th:unless="${category.id == null}" class="btn btn-primary mx-2" type="submit" value="Save Category">
+            <a class="btn btn-primary mx-2" href="#" th:href="@{/categories}">Back to View Categories</a>
+        </div>
+
+    </form>
+
+    <form class="my-2" action="#" th:action="@{/logout}">
+        <a class="btn btn-outline-dark mx-2" href="#" th:href="@{/}">Back to Home</a>
+        <input class="btn btn-outline-dark mx-2" type="submit" value="logout" sec:authorize="isAuthenticated()"/>
+    </form>
+
+</div>
+
+</body>
+</html>

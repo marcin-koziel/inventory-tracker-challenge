@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments/header :: html-head">
+    <meta charset="UTF-8">
+    <title>Error</title>
+</head>
+<body>
+
+<div class="d-flex flex-column justify-content-center align-items-center h-100">
+    <h1 class="alert alert-dark my-5" th:text="|Error ${errorCode}|">Error - - -</h1>
+    <h4 th:text="|${errorMessage}...|">Error Message</h4>
+
+    <a class="py-3" href="#" th:href="@{/}">Back to Home</a>
+</div>
+
+</body>
+</html>

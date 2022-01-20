@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+<head th:replace="fragments/header :: html-head">
+    <meta charset="UTF-8">
+    <title>View</title>
+</head>
+<body>
+
+<div class="div-table-container d-flex flex-column justify-content-center align-items-center">
+    <h1>Categories</h1>
+    <h5>Shopify Challenge</h5>
+
+    <div th:if="${categoryList.size() > 15}" class="py-5" sec:authorize="hasRole('ADMIN')">
+        <a class="btn btn-primary px-3 mx-2" href="#" th:href="@{/admin/categories/add}">Add a Category</a>
+    </div>
+
+    <div class="py-2 w-50">
+        <table class="table h-100">
+            <tr>
+                <th scope="col">ID</th>
+                <th scope="col">Title</th>
+                <th scope="col" sec:authorize="isAuthenticated()">Options</th>
+            </tr>
+            <tr th:each="category : ${categoryList}">
+                <th scope="row" th:text="${category.id}">
+                    Category ID - #
+                </th>
+                <td th:text="${category.title}">
+                    Category Title
+                </td>
+                <td class="d-flex flex-row justify-content-start h-100" sec:authorize="isAuthenticated()">
+                    <a class="mx-1" href="#" th:href="@{/admin/categories/edit/} + ${category.id}">Edit</a>
+                    <a class="mx-1" href="#" th:href="@{/admin/categories/remove/} + ${category.id}">Delete</a>
+                </td>
+            </tr>
+        </table>
+    </div>
+
+    <div class="m-3" sec:authorize="hasRole('ADMIN')">
+        <a class="btn btn-primary px-3 mx-2" href="#" th:href="@{/admin/categories/add}">Add a Category</a>
+    </div>
+
+    <form class="my-2" action="#" th:action="@{/logout}" sec:authorize="isAuthenticated()">
+        <a class="btn btn-outline-dark mx-2" href="#" th:href="@{/}">Back to Home</a>
+        <input class="btn btn-outline-dark mx-2" type="submit" value="logout"/>
+    </form>
+
+    <div sec:authorize="isAnonymous()">
+        <a class="btn btn-outline-dark my-2" href="#" th:href="@{/login}">Login</a>
+    </div>
+
+</div>
+
+</body>
+</html>

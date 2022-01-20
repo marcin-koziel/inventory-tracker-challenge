@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+<head th:replace="fragments/header :: html-head">
+    <meta charset="UTF-8">
+    <title>Add Book</title>
+</head>
+<body>
+
+<div class="div-form-container d-flex flex-column justify-content-center align-items-center h-100 w-100">
+
+    <h1 class="py-4">Add to Inventory</h1>
+
+    <form class="d-flex flex-column justify-content-center align-items-center w-75" action="#"
+          th:action="@{/admin/items/submit}" th:object="${item}" method="post">
+
+        <div class="d-flex flex-row w-100">
+
+            <svg class="img-fluid image-placeholder rounded px-2 d-flex w-100" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 450 300"
+                 width="450" height="300">
+                <rect width="450" height="300" fill="#cccccc"></rect>
+                <text x="50%" y="50%" dominant-baseline="middle" text-anchor="middle" font-family="monospace"
+                      font-size="26px" fill="#333333">Image Placeholder
+                </text>
+            </svg>
+
+            <div class="d-flex flex-column p-2 w-75">
+
+                <div class="form-group d-flex flex-column w-100">
+                    <label class="my-1">Product</label>
+                    <select th:field="${multipleSelectProduct.selectedIdList}" class="form-select" aria-label="Default select example">
+                        <option value="" selected="selected" hidden>Select the Product</option>
+                        <option th:each="product : ${multipleSelectProduct.populatedObjectList}"
+                                th:value="${product.id}"
+                                th:text="${product.name}"></option>
+                    </select>
+                </div>
+
+                <div class="form-group w-100">
+                    <label class="my-1">Brand</label>
+                    <select th:field="${multipleSelectBrand.selectedIdList}" class="form-select" aria-label="Default select example">
+                        <option value="" selected="selected" hidden>Select the Brand</option>
+                        <option th:each="brand : ${multipleSelectBrand.populatedObjectList}"
+                                th:value="${brand.id}"
+                                th:text="${brand.title}"></option>
+
+                    </select>
+                </div>
+
+                <div class="form-group w-100">
+                    <label class="my-1">Supplier</label>
+                    <select th:field="${multipleSelectSupplier.selectedIdList}" class="form-select" aria-label="Default select example">
+                        <option value="" selected="selected" hidden>Select the Supplier</option>
+                        <option th:each="supplier : ${multipleSelectSupplier.populatedObjectList}"
+                                th:value="${supplier.id}"
+                                th:text="${supplier.firstName} + ' ' + ${supplier.lastName}"></option>
+                    </select>
+                </div>
+
+                <div class="form-group w-100">
+                    <label class="my-1">Condition</label>
+                    <select th:selected="1" th:field="*{condition}" class="form-select" aria-label="Default select example">
+                        <option th:each="conditionOption : ${conditionList}"
+                                th:value="${conditionOption}"
+                                th:text="${conditionOption.toString().substring(0, 1).toUpperCase() + conditionOption.toString().substring(1).toLowerCase().replace('_', ' ')}"></option>
+                    </select>
+                </div>
+
+            </div>
+
+        </div>
+
+        <div class="d-flex flex-column justify-content-center py-4 w-100">
+
+            <div class="d-flex flex-row justify-content-between py-2 w-100">
+
+                <div class="align-self-start form-group px-2 w-50">
+                    <label class="my-1">SKU</label>
+                    <input th:field="*{sku}" class="form-control" type="text" placeholder="Enter an SKU" required>
+                </div>
+
+                <div class="align-self-start form-group px-2 w-25">
+                    <label class="my-1">Price</label>
+                    <input th:field="*{price}" class="form-control" type="number" placeholder="$0.00" step="0.10" required>
+                </div>
+
+                <div class="align-self-start form-group px-2 w-25">
+                    <label class="my-1">Discount</label>
+                    <input th:field="*{discount}" class="form-control" type="number" placeholder="0" required>
+                </div>
+
+            </div>
+
+            <div class="d-flex flex-row justify-content-between py-2 w-100">
+
+                <div class="align-self-start form-group px-2 w-25">
+                    <label class="my-1">Quantity</label>
+                    <input th:field="*{quantity}" class="form-control" type="number" value="" placeholder="0" step="0.01" required>
+                </div>
+
+                <div class="align-self-start form-group px-2 w-25">
+                    <label class="my-1">Available</label>
+                    <input th:field="*{available}" class="form-control" type="number" value="0" placeholder="0" step="0.01" required>
+                </div>
+
+                <div class="align-self-start form-group px-2 w-25">
+                    <label class="my-1">Sold</label>
+                    <input th:field="*{sold}" class="form-control" type="number" value="0" placeholder="0" step="0.01" required>
+                </div>
+
+                <div class="align-self-start form-group px-2 w-25">
+                    <label class="my-1">Defective</label>
+                    <input th:field="*{defective}" class="form-control" type="number" value="0" placeholder="0" step="0.01" required>
+                </div>
+
+            </div>
+
+        </div>
+
+        <input type="hidden" th:field="*{id}">
+        <input type="hidden" th:field="*{createdAt}">
+        <input type="hidden" th:field="*{updatedAt}">
+
+        <div class="d-flex flex-row justify-content-center my-2" sec:authorize="hasRole('ADMIN')">
+            <input th:if="*{id == null}"  class="btn btn-primary mx-2" type="submit" value="Add to Inventory">
+            <input th:unless="*{id == null}"  class="btn btn-primary mx-2" type="submit" value="Save Inventory Item">
+            <a class="btn btn-primary mx-2" href="#" th:href="@{/products}">View Products</a>
+            <a class="btn btn-primary mx-2" href="#" th:href="@{/categories}">View Categories</a>
+        </div>
+
+    </form>
+
+    <form class="d-flex justify-content-center my-2" action="#" th:action="@{/logout}">
+        <a class="btn btn-outline-dark mx-2" href="#" th:href="@{/}">Back to Home</a>
+        <input class="btn btn-outline-dark mx-2" type="submit" value="logout" sec:authorize="isAuthenticated()"/>
+    </form>
+
+</div>
+
+</body>
+</html>

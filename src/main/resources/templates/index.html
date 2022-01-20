@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+<head th:replace="fragments/header :: html-head">
+    <meta charset="ISO-8859-1">
+    <title>Index</title>
+</head>
+<body>
+
+<div class="div-table-container d-flex flex-column justify-content-center align-items-center">
+    <h1>Welcome to Inventory Tracker</h1>
+    <h5>Backend Developer Intern - Shopify Challenge</h5>
+
+    <div class="py-5 w-100">
+        <table class="table h-100">
+            <tr>
+                <th scope="col">ID</th>
+                <th scope="col">SKU</th>
+                <th scope="col">Name</th>
+                <th scope="col">Brand</th>
+                <th scope="col">Supplier</th>
+                <th scope="col">Price</th>
+                <th scope="col">Quantity</th>
+                <th scope="col">Available</th>
+                <th scope="col">Sold</th>
+                <th scope="col">Defective</th>
+                <th scope="col">Categories</th>
+                <th scope="col">Last Updated</th>
+                <th scope="col" sec:authorize="hasRole('ADMIN')">Options</th>
+            </tr>
+            <tr th:each="item : ${itemList}">
+                <th scope="row" th:text="${item.id}">
+                    Item ID
+                </th>
+                <td th:text="${item.sku}">
+                    Product Name
+                </td>
+                <td th:text="${item.product.name}">
+                    Product Summary
+                </td>
+                <td th:text="${item.brand.title}">
+                    Product Description
+                </td>
+                <td th:text="${item.supplier.firstName} + ' ' + ${item.supplier.lastName}">
+                    Product Description
+                </td>
+                <td th:text="${item.price}">
+                    Product Description
+                </td>
+                <td th:text="${item.quantity}">
+                    Product Description
+                </td>
+                <td th:text="${item.available}">
+                    Product Description
+                </td>
+                <td th:text="${item.sold}">
+                    Product Description
+                </td>
+                <td th:text="${item.defective}">
+                    Product Description
+                </td>
+                <td>
+                    <div th:each="category, categoryStat : ${item.product.categoryList}">
+                        <span  th:text="${category.title}"></span>
+                        <span th:if="${categoryStat.index + 1 != categoryStat.size}">,</span>
+                        <br>
+                    </div>
+                </td>
+                <td th:text="${#temporals.format(item.updatedAt, 'dd-MM-yyyy HH:mm')}">
+                    Book Author
+                </td>
+                <td class="d-flex flex-column justify-content-center h-100" sec:authorize="hasRole('ADMIN')">
+                    <a href="#" th:href="@{/admin/items/edit/} + ${item.id}">Edit</a>
+                    <a href="#" th:href="@{/admin/items/remove/} + ${item.id}">Delete</a>
+                </td>
+            </tr>
+        </table>
+    </div>
+
+    <div class="m-3" sec:authorize="hasRole('ADMIN')">
+        <a class="btn btn-primary px-3 mx-2" href="#" th:href="@{/admin/items/add}">Add to inventory</a>
+        <a class="btn btn-primary px-3 mx-2" href="#" th:href="@{/products}">View Products</a>
+        <a class="btn btn-primary px-3 mx-2" href="#" th:href="@{/categories}">View Categories</a>
+    </div>
+
+    <form action="#" th:action="@{/logout}" sec:authorize="isAuthenticated()">
+        <input class="btn btn-outline-dark my-2" type="submit" value="logout"/>
+    </form>
+
+    <div sec:authorize="isAnonymous()">
+        <a class="btn btn-outline-dark my-2" href="#" th:href="@{/login}">Login</a>
+    </div>
+
+
+</div>
+</body>
+</html>

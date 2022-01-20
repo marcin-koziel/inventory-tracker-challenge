@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+<head th:replace="fragments/header :: html-head">
+    <meta charset="UTF-8">
+    <title>View</title>
+</head>
+<body>
+
+<div class="div-table-container d-flex flex-column justify-content-center align-items-center">
+    <h1>Products</h1>
+    <h5>Shopify Challenge</h5>
+
+    <div class="py-5 w-100">
+        <table class="table h-100">
+            <tr>
+                <th scope="col">ID</th>
+                <th scope="col">Name</th>
+                <th scope="col">Summary</th>
+                <th scope="col">Description</th>
+                <th scope="col">Date Created</th>
+                <th scope="col">Date Last Updated</th>
+                <th scope="col">Categories</th>
+                <th scope="col" sec:authorize="hasRole('ADMIN')">Options</th>
+            </tr>
+            <tr th:each="product : ${productList}">
+                <th scope="row" th:text="${product.id}">
+                    Book ID - #
+                </th>
+                <td th:text="${product.name}">
+                    Book Title
+                </td>
+                <td class="w-25" th:text="${product.summary}">
+                    Book Author
+                </td>
+                <td class="w-25" th:text="${product.description}">
+                    Book Author
+                </td>
+                <td th:text="${#temporals.format(product.createdAt, 'dd-MM-yyyy HH:mm')}">
+                    Book Author
+                </td>
+                <td th:text="${#temporals.format(product.updatedAt, 'dd-MM-yyyy HH:mm')}">
+                    Book Author
+                </td>
+                <td>
+                    <div th:each="category, categoryStat : ${product.categoryList}">
+                        <span  th:text="${category.title}"></span>
+                        <span th:if="${categoryStat.index + 1 != categoryStat.size}">,</span>
+                        <br>
+                    </div>
+                </td>
+                <td class="d-flex flex-row justify-content-center h-100" sec:authorize="hasRole('ADMIN')">
+                    <a class="mx-1" href="#" th:href="@{/admin/products/edit/} + ${product.id}">Edit</a>
+                    <a class="mx-1" href="#" th:href="@{/admin/products/remove/} + ${product.id}">Delete</a>
+                </td>
+            </tr>
+        </table>
+    </div>
+
+    <div class="m-3" sec:authorize="hasRole('ADMIN')">
+        <a class="btn btn-primary px-3 mx-2" href="#" th:href="@{/admin/products/add}">Add a Product</a>
+    </div>
+
+    <form class="my-2" action="#" th:action="@{/logout}" sec:authorize="isAuthenticated()">
+        <a class="btn btn-outline-dark mx-2" href="#" th:href="@{/}">Back to Home</a>
+        <input class="btn btn-outline-dark mx-2" type="submit" value="logout"/>
+    </form>
+
+    <div sec:authorize="isAnonymous()">
+        <a class="btn btn-outline-dark my-2" href="#" th:href="@{/login}">Login</a>
+    </div>
+
+
+
+</div>
+
+</body>
+</html>
