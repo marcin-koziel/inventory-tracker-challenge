@@ -88,6 +88,8 @@ To run this Spring Boot application in Visual Studio Code, you need to install t
 
 Open your browser once the application is running and go to [http://localhost:8080/](http://localhost:8080/) to use the web application! :thumbsup:
 
+### CRUD
+
 To enable **CRUD** functionality, visit the login page and enter the following credentials:
 
 Username:
@@ -101,6 +103,21 @@ Password:
 ```
 Password!
 ```
+
+### Chosen Feature
+
+Within the list of features provided to choose from, I went with the following:
+
+```sh
+Ability to assign/remove inventory items to a named group/collection
+```
+
+This feature is apparent on the following page, where multiple selections for _Categories_ are enabled, per _Product_.
+
+**Add to Product** - [localhost:8080/admin/products/add](localhost:8080/admin/products/add)
+
+<img src="images/add-product-multi-select.jpg" alt="Logo" width="500" height="250">
+
 
 <p align="right">(<a href="#top">back to top</a>)</p>
 
