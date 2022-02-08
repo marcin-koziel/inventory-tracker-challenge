@@ -12,7 +12,6 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.provisioning.JdbcUserDetailsManager;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -28,10 +27,10 @@ import java.util.List;
 @Controller
 public class HomeController {
 
-    /**
-     * *****************************************
-     * Initalize class
-     * *****************************************
+    /*
+      *****************************************
+      Initialize class
+      *****************************************
      */
 
     /** Encoding string values, in this case passwords. */
@@ -43,7 +42,7 @@ public class HomeController {
     @Autowired
     private JdbcUserDetailsManager jdbcUserDetailsManager;
 
-    private DatabaseAccess da;
+    private final DatabaseAccess da;
 
     /**
      * Instantiates a new Home controller.
@@ -65,9 +64,9 @@ public class HomeController {
 
         List<Item> itemList = da.getAllItems();
 
-        model
-            .addAttribute("title", "Inventory Items")
-            .addAttribute("itemList", itemList);
+
+        model.addAttribute("title", "Inventory Items");
+        model.addAttribute("itemList", itemList);
         return "index";
     }
 
@@ -79,7 +78,7 @@ public class HomeController {
      */
     @GetMapping("/login")
     public String goToPageLogin(Model model) {
-        model.addAttribute("title", new String("Login"));
+        model.addAttribute("title", "Login");
         return "login";
     }
 
@@ -121,7 +120,7 @@ public class HomeController {
             // Creating a new User
             List<GrantedAuthority> authorityList = new ArrayList<>();
 
-            authorityList.add(new SimpleGrantedAuthority(new String("ROLE_USER")));
+            authorityList.add(new SimpleGrantedAuthority("ROLE_USER"));
 
             String encodedPassword = passwordEncoder.encode(password);
 
@@ -129,9 +128,8 @@ public class HomeController {
 
             jdbcUserDetailsManager.createUser(user);
 
-            model
-                .addAttribute("title", "Login")
-                .addAttribute("status", "registered");
+            model.addAttribute("title", "Login");
+            model.addAttribute("status", "registered");
             return "login";
         }
     }
@@ -143,7 +141,7 @@ public class HomeController {
      * @return      the string
      */
     @GetMapping("/admin/items/add")
-    public String goToPageItemAdd(Model model, Principal principal) {
+    public String goToPageItemAdd(Model model) {
 
         Item item = new Item();
 
@@ -151,13 +149,13 @@ public class HomeController {
         MultipleSelect<Product> multipleSelectProduct = new MultipleSelect<>(da.getAllProducts(), new ArrayList<>());
         MultipleSelect<Brand> multipleSelectBrand = new MultipleSelect<>(da.getAllBrands(), new ArrayList<>());
 
-        model
-            .addAttribute("title", "Add Item")
-            .addAttribute("item", item)
-            .addAttribute("multipleSelectSupplier", multipleSelectSupplier)
-            .addAttribute("multipleSelectProduct", multipleSelectProduct)
-            .addAttribute("multipleSelectBrand", multipleSelectBrand)
-            .addAttribute("conditionList", Item.Condition.values());
+
+        model.addAttribute("title", "Add Item");
+        model.addAttribute("item", item);
+        model.addAttribute("multipleSelectSupplier", multipleSelectSupplier);
+        model.addAttribute("multipleSelectProduct", multipleSelectProduct);
+        model.addAttribute("multipleSelectBrand", multipleSelectBrand);
+        model.addAttribute("conditionList", Item.Condition.values());
 
         return "admin/add-item";
     }
@@ -185,13 +183,13 @@ public class HomeController {
         MultipleSelect<Product> multipleSelectProduct = new MultipleSelect<>(da.getAllProducts(), multipleSelectedIdListProduct);
         MultipleSelect<Brand> multipleSelectBrand = new MultipleSelect<>(da.getAllBrands(), multipleSelectedIdListBrand);
 
-        model
-                .addAttribute("title", "Add Item")
-                .addAttribute("item", item)
-                .addAttribute("multipleSelectSupplier", multipleSelectSupplier)
-                .addAttribute("multipleSelectProduct", multipleSelectProduct)
-                .addAttribute("multipleSelectBrand", multipleSelectBrand)
-                .addAttribute("conditionList", Item.Condition.values());
+
+        model.addAttribute("title", "Add Item");
+        model.addAttribute("item", item);
+        model.addAttribute("multipleSelectSupplier", multipleSelectSupplier);
+        model.addAttribute("multipleSelectProduct", multipleSelectProduct);
+        model.addAttribute("multipleSelectBrand", multipleSelectBrand);
+        model.addAttribute("conditionList", Item.Condition.values());
 
         return "admin/add-item";
     }
@@ -201,14 +199,13 @@ public class HomeController {
      *
      * @param item              the item object will be inserted into database
      * @param multipleSelect    class specialized for working with multiple select/options in forms
-     * @return                  the modelandview string
+     * @return                  the ModelAndView string
      */
     @PostMapping("/admin/items/submit")
     public ModelAndView databaseUpdateItem(
             @ModelAttribute Item item
             , @ModelAttribute MultipleSelect<Object> multipleSelect
-            , Principal principal
-            , BindingResult bindingResult) {
+            , Principal principal) {
 
         Long productId = Long.parseLong(multipleSelect.getSelectedIdList().get(0));
         Long brandId = Long.parseLong(multipleSelect.getSelectedIdList().get(1));
@@ -243,7 +240,7 @@ public class HomeController {
      * @return      the string
      */
     @GetMapping("/admin/items/remove/{id}")
-    public ModelAndView databaseExpireItem(@PathVariable Long id, Model model) {
+    public ModelAndView databaseExpireItem(@PathVariable Long id) {
 
         da.expireItem(Item.builder().Id(id).build());
 
@@ -267,7 +264,7 @@ public class HomeController {
 
         model.addAttribute("productList", allProductList);
 
-        return "view-products";
+        return "/user/view-products";
     }
 
     /**
@@ -279,10 +276,9 @@ public class HomeController {
     @GetMapping("/admin/products/add")
     public String goToPageProductAdd(Model model) {
 
-        model
-            .addAttribute("title", "Add Product")
-            .addAttribute("product", new Product())
-            .addAttribute("multipleSelectionObj", new MultipleSelect<Category>(da.getAllCategories(), new ArrayList<>()));
+        model.addAttribute("title", "Add Product");
+        model.addAttribute("product", new Product());
+        model.addAttribute("multipleSelectionObj", new MultipleSelect<>(da.getAllCategories(), new ArrayList<>()));
 
         return "admin/add-product";
     }
@@ -307,10 +303,10 @@ public class HomeController {
 
         MultipleSelect<Category> multipleSelect = new MultipleSelect<>(da.getAllCategories(), multipleSelectedIdList);
 
-        model
-            .addAttribute("title", "Edit Product")
-            .addAttribute("product", product)
-            .addAttribute("multipleSelectionObj", multipleSelect);
+
+        model.addAttribute("title", "Edit Product");
+        model.addAttribute("product", product);
+        model.addAttribute("multipleSelectionObj", multipleSelect);
 
         return "admin/add-product";
     }
@@ -324,8 +320,7 @@ public class HomeController {
     @PostMapping("/admin/products/submit")
     public ModelAndView databaseUpdateProduct(
             @ModelAttribute("product") Product product
-            , @ModelAttribute MultipleSelect<Category> multipleSelect
-            , BindingResult bindingResult) {
+            , @ModelAttribute MultipleSelect<Category> multipleSelect) {
 
         if (product.getCategoryList() == null) {
             product.setCategoryList(new ArrayList<>());
@@ -350,7 +345,7 @@ public class HomeController {
      * @return       the string
      */
     @GetMapping("/admin/products/remove/{id}")
-    public ModelAndView databaseExpireProduct(@PathVariable Long id, Model model) {
+    public ModelAndView databaseExpireProduct(@PathVariable Long id) {
 
         da.expireProduct(Product.builder().id(id).build());
 
@@ -358,7 +353,7 @@ public class HomeController {
     }
 
     /**
-     * Go to the categories page string.
+     * Go to the categories' page string.
      *
      * @param model the model give thymeleaf meaningful attributes
      * @return      the string
@@ -368,7 +363,7 @@ public class HomeController {
 
         model.addAttribute("categoryList", da.getAllCategories());
 
-        return "view-categories";
+        return "/user/view-categories";
     }
 
     /**
@@ -416,7 +411,7 @@ public class HomeController {
 
         model.addAttribute("categoryList", da.getAllCategories());
 
-        return "view-categories";
+        return "/user/view-categories";
     }
 
     /**
@@ -426,7 +421,7 @@ public class HomeController {
      * @return       the string
      */
     @GetMapping("/admin/categories/remove/{id}")
-    public ModelAndView databaseExpireCategory(@PathVariable Long id, Model model) {
+    public ModelAndView databaseExpireCategory(@PathVariable Long id) {
 
         da.expireCategory(Category.builder().id(id).build());
 
