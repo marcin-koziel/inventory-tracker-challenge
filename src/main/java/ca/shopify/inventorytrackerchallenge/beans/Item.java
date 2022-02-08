@@ -27,21 +27,21 @@ public class Item {
         UNACCEPTABLE
     }
 
-    Long Id;
-    Product product;
-    Brand brand;
-    User supplier;
-    String sku;
-    Float discount;
-    Float price;
-    Float quantity;
-    Condition condition;
-    Integer sold;
-    Integer available;
-    Integer defective;
-    User createdBy;
-    User updatedBy;
-    LocalDateTime createdAt;
-    LocalDateTime updatedAt;
+    private Long Id;
+    private Product product;
+    private Brand brand;
+    private User supplier;
+    private String sku;
+    private Float discount;
+    private Float price;
+    private Float quantity;
+    private Condition condition;
+    private Integer sold;
+    private Integer available;
+    private Integer defective;
+    private User createdBy;
+    private User updatedBy;
+    private LocalDateTime createdAt;
+    private LocalDateTime updatedAt;
 
 }

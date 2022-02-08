@@ -18,8 +18,8 @@ import java.util.List;
 @NoArgsConstructor
 public class MultipleSelect<T> {
 
-    List<T> populatedObjectList;
-    List<String> selectedIdList;
+    private List<T> populatedObjectList;
+    private List<String> selectedIdList;
 
 }
 

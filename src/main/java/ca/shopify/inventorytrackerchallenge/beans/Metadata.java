@@ -16,7 +16,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class Metadata {
 
-    Long id;
-    String title;
+    private Long id;
+    private String title;
 
 }

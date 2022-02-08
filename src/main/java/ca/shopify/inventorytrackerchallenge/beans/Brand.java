@@ -18,10 +18,10 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 public class Brand {
 
-    Long id;
-    String title;
-    String summary;
-    LocalDateTime createdAt;
-    LocalDateTime updatedAt;
+    private Long id;
+    private String title;
+    private String summary;
+    private LocalDateTime createdAt;
+    private LocalDateTime updatedAt;
 
 }

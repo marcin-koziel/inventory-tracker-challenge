@@ -18,10 +18,10 @@ import java.util.List;
 @AllArgsConstructor
 public class User {
 
-    Long id;
-    String username;
-    String firstName;
-    String lastName;
-    List<String> authorities;
+    private Long id;
+    private String username;
+    private String firstName;
+    private String lastName;
+    private List<String> authorities;
 
 }

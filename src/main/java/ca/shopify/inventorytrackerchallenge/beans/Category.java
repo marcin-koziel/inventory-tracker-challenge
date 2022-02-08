@@ -18,8 +18,8 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 public class Category {
 
-    Long id;
-    String title;
-    LocalDateTime expiredAt;
+    private Long id;
+    private String title;
+    private LocalDateTime expiredAt;
 
 }

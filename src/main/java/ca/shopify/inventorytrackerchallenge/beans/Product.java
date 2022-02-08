@@ -19,12 +19,12 @@ import java.util.List;
 @AllArgsConstructor
 public class Product {
 
-    Long id;
-    String name;
-    String summary;
-    String description;
-    LocalDateTime createdAt;
-    LocalDateTime updatedAt;
-    List<Category> categoryList;
+    private Long id;
+    private String name;
+    private String summary;
+    private String description;
+    private LocalDateTime createdAt;
+    private LocalDateTime updatedAt;
+    private List<Category> categoryList;
 
 }
