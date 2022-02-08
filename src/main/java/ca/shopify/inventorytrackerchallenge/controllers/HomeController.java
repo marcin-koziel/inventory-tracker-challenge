@@ -104,13 +104,17 @@ public class HomeController {
      * @return         the string
      */
     @PostMapping("/login/register_status")
-    public String databaseAddUser(@RequestParam String username, @RequestParam String password, Model model) {
+    public String databaseAddUser(@RequestParam String username, @RequestParam String password, @RequestParam String confirm_password, Model model) {
 
         if (da.isUsernameTaken(username)) {
             // Username provided is taken
-            model
-                .addAttribute("title", "Register")
-                .addAttribute("status", "taken");
+            model.addAttribute("title", "Register");
+            model.addAttribute("status", "taken");
+            return "register";
+        } else if (!password.equals(confirm_password)) {
+            // Passwords do not match
+            model.addAttribute("title", "Register");
+            model.addAttribute("status", "nomatch");
             return "register";
         } else {
 

@@ -14,16 +14,29 @@
         <p class="alert alert-danger">Username taken. Try another.</p>
     </div>
 
+    <div th:if="${status} == 'nomatch'">
+        <p class="alert alert-danger">Passwords do not match!</p>
+    </div>
+
     <form class="d-flex flex-column justify-content-center align-items-center" action="#" th:action="@{/login/register_status}" method="post">
         <div class="form-group py-2">
             <label>Username</label>
-            <input class="form-control my-1" type="text" name="username" required placeholder="Enter a username!" />
+            <label>
+                <input class="form-control my-1" type="text" name="username" required placeholder="Enter a username!" />
+            </label>
         </div>
         <div class="form-group py-2">
             <label>Password</label>
-            <input class="form-control my-1" type="text" name="password" required placeholder="Enter a password!" />
+            <label>
+                <input class="form-control my-1" type="password" name="password" required placeholder="Enter a password!" />
+            </label>
         </div>
-
+        <div class="form-group py-2">
+            <label>Confirm Password</label>
+            <label>
+                <input class="form-control my-1" type="password" name="confirm_password" required placeholder="Confirm your password!" />
+            </label>
+        </div>
         <div class="d-flex flex-column align-items-center py-2">
             <input class="btn btn-primary my-2 w-50" type="submit" value="Register now">
             <div class="d-flex flex-row my-2">
